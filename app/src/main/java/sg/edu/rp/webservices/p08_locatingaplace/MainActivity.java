@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentManager fm = getSupportFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment)
+        final SupportMapFragment mapFragment = (SupportMapFragment)
                 fm.findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -81,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
                                 "Tel:66776677\"\n")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        Toast.makeText(MainActivity.this,marker.getTitle().toString(),Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
                 final LatLng poi_North = new LatLng(1.455181, 103.823045);
                 Marker north = map.addMarker(new
                         MarkerOptions()
